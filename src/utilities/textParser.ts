@@ -14,16 +14,17 @@ const COL_START_STRS = ["col-start", "column-start"];
 const COL_END_STRS = ["col-end", "column-end"];
 const COL_BREAK_STRS = ["col-break", "column-break"];
 const COL_SETTINGS_STRS = ["col-settings", "multi-column-settings"];
+const COL_DELIMITER = "(===|---)";
 
-const START_REGEX_STRS = [`(===|---) *${COL_START_STRS[0]}(:?[a-zA-Z0-9-_\\s]*)?`,
-                          `(===|---) *${COL_START_STRS[1]}(:?[a-zA-Z0-9-_\\s]*)?`]
+const START_REGEX_STRS = [`${COL_DELIMITER} *${COL_START_STRS[0]}(:?[a-zA-Z0-9-_\\s]*)?`,
+                          `${COL_DELIMITER} *${COL_START_STRS[1]}(:?[a-zA-Z0-9-_\\s]*)?`]
 const START_REGEX_ARR: RegExp[] = [];
 for(let i = 0; i < START_REGEX_STRS.length; i++) {
     START_REGEX_ARR.push(new RegExp(START_REGEX_STRS[i]));
 }
 
-const START_REGEX_STRS_WHOLE_LINE = [`^(===|---) *${COL_START_STRS[0]}(:?[a-zA-Z0-9-_\\s]*)?$`,
-                                     `^(===|---) *${COL_START_STRS[1]}(:?[a-zA-Z0-9-_\\s]*)?$`]
+const START_REGEX_STRS_WHOLE_LINE = [`^${COL_DELIMITER} *${COL_START_STRS[0]}(:?[a-zA-Z0-9-_\\s]*)?$`,
+                                     `^${COL_DELIMITER} *${COL_START_STRS[1]}(:?[a-zA-Z0-9-_\\s]*)?$`]
 const START_REGEX_ARR_WHOLE_LINE: RegExp[] = [];
 for(let i = 0; i < START_REGEX_STRS_WHOLE_LINE.length; i++) {
     START_REGEX_ARR_WHOLE_LINE.push(new RegExp(START_REGEX_STRS_WHOLE_LINE[i]));
@@ -71,10 +72,8 @@ export function isStartTagWithID(text: string): {isStartTag: boolean, hasKey: bo
     return {isStartTag: false, hasKey: false};
 }
 
-const END_REGEX_STRS = [`--- *${COL_END_STRS[0]}`,
-                        `--- *${COL_END_STRS[1]}`,
-                        `=== *${COL_END_STRS[0]}`,
-                        `=== *${COL_END_STRS[1]}`]
+const END_REGEX_STRS = [`${COL_DELIMITER} *${COL_END_STRS[0]}`,
+                        `${COL_DELIMITER} *${COL_END_STRS[1]}`]
 const END_REGEX_ARR: RegExp[] = [];
 for(let i = 0; i < END_REGEX_STRS.length; i++) {
     END_REGEX_ARR.push(new RegExp(END_REGEX_STRS[i]));
@@ -153,14 +152,14 @@ function getEndTagData(text: string) {
     return { found, startPosition, endPosition, matchLength };
 }
 
-const COL_REGEX_STRS: [string,string][] = [[`^===\\s*?${COL_BREAK_STRS[0]}\\s*?===\\s*?$`   ,""], // [Regex, Regex Flags]
-                                           [`^===\\s*?${COL_BREAK_STRS[1]}\\s*?===\\s*?$`   ,""],
-                                           [`^===\\s*?${COL_BREAK_STRS[2]}\\s*?===\\s*?$` ,""],
-                                           [`^===\\s*?${COL_BREAK_STRS[3]}\\s*?===\\s*?$` ,""],
-                                           [`^---\\s*?${COL_BREAK_STRS[0]}\\s*?---\\s*?$`   ,""],
-                                           [`^---\\s*?${COL_BREAK_STRS[1]}\\s*?---\\s*?$`   ,""],
-                                           [`^---\\s*?${COL_BREAK_STRS[2]}\\s*?---\\s*?$` ,""],
-                                           [`^---\\s*?${COL_BREAK_STRS[3]}\\s*?---\\s*?$` ,""],
+const COL_REGEX_STRS: [string,string][] = [[`^${COL_DELIMITER}\\s*?${COL_BREAK_STRS[0]}\\s*?${COL_DELIMITER}\\s*?$`   ,""], // [Regex, Regex Flags]
+                                           [`^${COL_DELIMITER}\\s*?${COL_BREAK_STRS[1]}\\s*?${COL_DELIMITER}\\s*?$`   ,""],
+                                           [`^${COL_DELIMITER}\\s*?${COL_BREAK_STRS[2]}\\s*?${COL_DELIMITER}\\s*?$` ,""],
+                                           [`^${COL_DELIMITER}\\s*?${COL_BREAK_STRS[3]}\\s*?${COL_DELIMITER}\\s*?$` ,""],
+                                           [`^${COL_DELIMITER}\\s*?${COL_BREAK_STRS[0]}\\s*?${COL_DELIMITER}\\s*?$`   ,""],
+                                           [`^${COL_DELIMITER}\\s*?${COL_BREAK_STRS[1]}\\s*?${COL_DELIMITER}\\s*?$`   ,""],
+                                           [`^${COL_DELIMITER}\\s*?${COL_BREAK_STRS[2]}\\s*?${COL_DELIMITER}\\s*?$` ,""],
+                                           [`^${COL_DELIMITER}\\s*?${COL_BREAK_STRS[3]}\\s*?${COL_DELIMITER}\\s*?$` ,""],
                                            [`^ *?(?:\\?)\\${COL_BREAK_STRS[2]} *?$`        ,""],
                                            [`^:{3,} *${COL_BREAK_STRS[2]} *(?:(?:$\\n^)?| *):{3,} *$` ,"m"]];
 const COL_REGEX_ARR: RegExp[] = [];
@@ -182,14 +181,14 @@ export function containsColEndTag(text: string): boolean {
 }
 
 const INNER_COL_END_REGEX_ARR: string[] = [
-    `/^-{3}\s*?${COL_BREAK_STRS[0]}\s*?-{3}\s*?$\n?/`,
-    `/^-{3}\s*?${COL_BREAK_STRS[1]}\s*?-{3}\s*?$\n?/`,
-    `/^-{3}\s*?${COL_BREAK_STRS[2]}\s*?-{3}\s*?$\n?/`,
-    `/^-{3}\s*?${COL_BREAK_STRS[3]}\s*?-{3}\s*?$\n?/`,
-    `/^={3}\s*?${COL_BREAK_STRS[0]}\s*?={3}\s*?$\n?/`,
-    `/^={3}\s*?${COL_BREAK_STRS[1]}\s*?={3}\s*?$\n?/`,
-    `/^={3}\s*?${COL_BREAK_STRS[2]}\s*?={3}\s*?$\n?/`,
-    `/^={3}\s*?${COL_BREAK_STRS[3]}\s*?={3}\s*?$\n?/`,
+    `/^${COL_DELIMITER}\s*?${COL_BREAK_STRS[0]}\s*?${COL_DELIMITER}\s*?$\n?/`,
+    `/^${COL_DELIMITER}\s*?${COL_BREAK_STRS[1]}\s*?${COL_DELIMITER}\s*?$\n?/`,
+    `/^${COL_DELIMITER}\s*?${COL_BREAK_STRS[2]}\s*?${COL_DELIMITER}\s*?$\n?/`,
+    `/^${COL_DELIMITER}\s*?${COL_BREAK_STRS[3]}\s*?${COL_DELIMITER}\s*?$\n?/`,
+    `/^${COL_DELIMITER}\s*?${COL_BREAK_STRS[0]}\s*?${COL_DELIMITER}\s*?$\n?/`,
+    `/^${COL_DELIMITER}\s*?${COL_BREAK_STRS[1]}\s*?${COL_DELIMITER}\s*?$\n?/`,
+    `/^${COL_DELIMITER}\s*?${COL_BREAK_STRS[2]}\s*?${COL_DELIMITER}\s*?$\n?/`,
+    `/^${COL_DELIMITER}\s*?${COL_BREAK_STRS[3]}\s*?${COL_DELIMITER}\s*?$\n?/`,
     `/^ *?(?:\\?)\\${COL_BREAK_STRS[2]} *?$\n?/`,
     `/^:{3,} *${COL_BREAK_STRS[2]} *(?:(?:$\n^)?| *):{3,} *$/`
 ];
