@@ -11,7 +11,7 @@
   "author": "Cameron Robinson",
   "license": "GPL-3.0",
   "devDependencies": {
-    "@codemirror/language": "https://github.com/lishid/cm-language",
+    "@codemirror/language": "6.0.0",
     "@codemirror/state": "6.0.0",
     "@codemirror/view": "6.0.0",
     "@rollup/plugin-commonjs": "^18.0.0",

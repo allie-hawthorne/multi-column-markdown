@@ -8,7 +8,7 @@
 
 import { Extension, Line, RangeSetBuilder, StateField, Transaction } from "@codemirror/state";
 import { Decoration, DecorationSet, EditorView } from "@codemirror/view";
-import { syntaxTree, tokenClassNodeProp } from "@codemirror/language";
+import { syntaxTree } from "@codemirror/language";
 import { containsRegionStart, findEndTag, findSettingsCodeblock, findStartCodeblock, findStartTag } from "../utilities/textParser";
 import { PandocRegexData, findPandoc, parsePandocSettings } from "src/utilities/pandocParser";
 import { MultiColumnMarkdown_DefinedSettings_LivePreview_Widget, MultiColumnMarkdown_LivePreview_Widget } from "./mcm_livePreview_widget";
@@ -55,10 +55,10 @@ export const multiColumnMarkdown_StateField = StateField.define<DecorationSet>({
                 }
 
 				// We want to run on the whole file so we don't just look for a single token.
-				const tokenProps = node.type.prop<string>(tokenClassNodeProp);
-				if (tokenProps !== undefined) {
-					return;
-				}
+				// const tokenProps = node.type.prop<string>(tokenClassNodeProp);
+				// if (tokenProps !== undefined) {
+				// 	return;
+				// }
 
 				// We want to know where the user's cursor is, it can be
 				// selecting multiple regions of text as well so we need to know
