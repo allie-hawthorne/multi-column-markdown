@@ -627,35 +627,6 @@ function checkForColumnBreakErrors(domObject: DOMObject,
         return workingText;
     }
 
-    // Slice out the 20 characters before and after the column break and then get just
-    // the one line before and after to check if error message required.
-    let startIndexOffset = Math.clamp(startIndex - 20, 0, startIndex);
-    let endIndexOffset = Math.clamp(endIndex + 20, endIndex, checkText.length - 1);
-    
-    let additionalText = checkText.slice(startIndexOffset, endIndexOffset);
-    let textBefore = additionalText.slice(0, 20);
-    let textAfter = additionalText.slice(20 + matchLength)
-    textBefore = textBefore.replace(endTagText, "")
-
-    let linesAbove = textBefore.split("\n").filter((val) => {
-        return val !== ""
-    })
-    let linesBelow = textAfter.split("\n").filter((val) => {
-        return val !== ""
-    })
-    if(linesAbove.length === 0 && linesBelow.length === 0) {
-        return workingText
-    }
-
-    let lineAbove = linesAbove.last()
-    let lineBelow = linesBelow.first()
-    parseColBreakErrorType({
-        lineAbove: lineAbove,
-        lineBelow: lineBelow,
-        objectTag: DOMObjectTag.columnBreak,
-        colBreakType: ElementColumnBreakType.none
-    }, errorManager)
-
     return newWorkingText
 }
 
