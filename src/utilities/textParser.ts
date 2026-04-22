@@ -10,45 +10,33 @@ import { parseStartRegionCodeBlockID } from "./settingsParser";
 import { containsPandoc, findPandocStart, reducePandocRegionToEndDiv, getPandocStartData } from "./pandocParser";
 import { RegionType, StartTagRegexMatch, defaultStartRegionData } from "./interfaces";
 
-const COL_START_STRS = ["col-start", "column-start"];
-const COL_END_STRS = ["col-end", "column-end"];
-const COL_BREAK_STRS = ["col-break", "column-break"];
-const COL_SETTINGS_STRS = ["col-settings", "multi-column-settings"];
+// TODO: are these the best names?
+const COL_START_STRS = "(col-start|column-start)";
+const COL_END_STRS = "(col-end|column-end)";
+const COL_BREAK_STRS = "(col-break|column-break)";
+const COL_SETTINGS_STRS = "(col-settings|column-settings)";
 const COL_DELIMITER = "(===|---)";
 
-const START_REGEX_STRS = [`${COL_DELIMITER} *${COL_START_STRS[0]}(:?[a-zA-Z0-9-_\\s]*)?`,
-                          `${COL_DELIMITER} *${COL_START_STRS[1]}(:?[a-zA-Z0-9-_\\s]*)?`]
-const START_REGEX_ARR: RegExp[] = [];
-for(let i = 0; i < START_REGEX_STRS.length; i++) {
-    START_REGEX_ARR.push(new RegExp(START_REGEX_STRS[i]));
-}
+const START_REGEX_STR = `${COL_DELIMITER} *${COL_START_STRS}(:?[a-zA-Z0-9-_\\s]*)?`;
+const START_REGEX = new RegExp(START_REGEX_STR);
 
-const START_REGEX_STRS_WHOLE_LINE = [`^${COL_DELIMITER} *${COL_START_STRS[0]}(:?[a-zA-Z0-9-_\\s]*)?$`,
-                                     `^${COL_DELIMITER} *${COL_START_STRS[1]}(:?[a-zA-Z0-9-_\\s]*)?$`]
-const START_REGEX_ARR_WHOLE_LINE: RegExp[] = [];
-for(let i = 0; i < START_REGEX_STRS_WHOLE_LINE.length; i++) {
-    START_REGEX_ARR_WHOLE_LINE.push(new RegExp(START_REGEX_STRS_WHOLE_LINE[i]));
-}
-
+const START_REGEX_STR_WHOLE_LINE = `^${START_REGEX_STR}$`;
+const START_REGEX_WHOLE_LINE = new RegExp(START_REGEX_STR_WHOLE_LINE);
 
 export function findStartTag(text: string): StartTagRegexMatch {
 
     let startRegion = defaultStartRegionData();
     startRegion.regionType = "ORIGINAL";
 
-    for(let i = 0; i< START_REGEX_ARR.length; i++) {
+    let regexData = START_REGEX.exec(text)
+    if(regexData !== null && regexData.length > 0) {
+        startRegion.startPosition = regexData.index
+        startRegion.matchLength = regexData[0].length;
+        startRegion.endPosition = startRegion.startPosition + startRegion.matchLength;
 
-        let regexData = START_REGEX_ARR[i].exec(text)
-        if(regexData !== null && regexData.length > 0) {
-            startRegion.startPosition = regexData.index
-            startRegion.matchLength = regexData[0].length;
-            startRegion.endPosition = startRegion.startPosition + startRegion.matchLength;
-
-            let line = text.slice(startRegion.startPosition, startRegion.endPosition);
-            if(START_REGEX_ARR_WHOLE_LINE[i].test(line)) {
-                startRegion.found = true;
-                break;
-            }
+        let line = text.slice(startRegion.startPosition, startRegion.endPosition);
+        if(START_REGEX_WHOLE_LINE.test(line)) {
+            startRegion.found = true;
         }
     }
     return startRegion;
@@ -72,12 +60,8 @@ export function isStartTagWithID(text: string): {isStartTag: boolean, hasKey: bo
     return {isStartTag: false, hasKey: false};
 }
 
-const END_REGEX_STRS = [`${COL_DELIMITER} *${COL_END_STRS[0]}`,
-                        `${COL_DELIMITER} *${COL_END_STRS[1]}`]
-const END_REGEX_ARR: RegExp[] = [];
-for(let i = 0; i < END_REGEX_STRS.length; i++) {
-    END_REGEX_ARR.push(new RegExp(END_REGEX_STRS[i]));
-}
+const END_REGEX_STR = `${COL_DELIMITER} *${COL_END_STRS}`
+const END_REGEX = new RegExp(END_REGEX_STR);
 
 type TagPositioningData = {
     found: boolean;
@@ -137,31 +121,21 @@ function getEndTagData(text: string) {
     let startPosition = -1;
     let endPosition = -1
     let matchLength = 0;
-    for(let i = 0; i< END_REGEX_ARR.length; i++) {
 
-        let regexData = END_REGEX_ARR[i].exec(text)
-        if(regexData !== null && regexData.length > 0) {
-            found = true;
-            startPosition = regexData.index
-            matchLength = regexData[0].length;
-            break;
-        }
+    let regexData = END_REGEX.exec(text)
+    if(regexData !== null && regexData.length > 0) {
+        found = true;
+        startPosition = regexData.index
+        matchLength = regexData[0].length;
     }
     endPosition = startPosition + matchLength;
 
     return { found, startPosition, endPosition, matchLength };
 }
 
-const COL_REGEX_STRS: [string,string][] = [[`^${COL_DELIMITER}\\s*?${COL_BREAK_STRS[0]}\\s*?${COL_DELIMITER}\\s*?$`   ,""], // [Regex, Regex Flags]
-                                           [`^${COL_DELIMITER}\\s*?${COL_BREAK_STRS[1]}\\s*?${COL_DELIMITER}\\s*?$`   ,""],
-                                           [`^${COL_DELIMITER}\\s*?${COL_BREAK_STRS[2]}\\s*?${COL_DELIMITER}\\s*?$` ,""],
-                                           [`^${COL_DELIMITER}\\s*?${COL_BREAK_STRS[3]}\\s*?${COL_DELIMITER}\\s*?$` ,""],
-                                           [`^${COL_DELIMITER}\\s*?${COL_BREAK_STRS[0]}\\s*?${COL_DELIMITER}\\s*?$`   ,""],
-                                           [`^${COL_DELIMITER}\\s*?${COL_BREAK_STRS[1]}\\s*?${COL_DELIMITER}\\s*?$`   ,""],
-                                           [`^${COL_DELIMITER}\\s*?${COL_BREAK_STRS[2]}\\s*?${COL_DELIMITER}\\s*?$` ,""],
-                                           [`^${COL_DELIMITER}\\s*?${COL_BREAK_STRS[3]}\\s*?${COL_DELIMITER}\\s*?$` ,""],
-                                           [`^ *?(?:\\?)\\${COL_BREAK_STRS[2]} *?$`        ,""],
-                                           [`^:{3,} *${COL_BREAK_STRS[2]} *(?:(?:$\\n^)?| *):{3,} *$` ,"m"]];
+const COL_REGEX_STRS: [string,string][] = [[`^${COL_DELIMITER}\\s*?${COL_BREAK_STRS}\\s*?${COL_DELIMITER}\\s*?$`   ,""], // [Regex, Regex Flags]
+                                           [`^ *?(?:\\?)${COL_BREAK_STRS} *?$`        ,""],
+                                           [`^:{3,} *${COL_BREAK_STRS} *(?:(?:$\\n^)?| *):{3,} *$` ,"m"]];
 const COL_REGEX_ARR: RegExp[] = [];
 for(let i = 0; i < COL_REGEX_STRS.length; i++) {
     COL_REGEX_ARR.push(new RegExp(COL_REGEX_STRS[i][0], COL_REGEX_STRS[i][1]));
@@ -181,16 +155,9 @@ export function containsColEndTag(text: string): boolean {
 }
 
 const INNER_COL_END_REGEX_ARR: string[] = [
-    `/^${COL_DELIMITER}\s*?${COL_BREAK_STRS[0]}\s*?${COL_DELIMITER}\s*?$\n?/`,
-    `/^${COL_DELIMITER}\s*?${COL_BREAK_STRS[1]}\s*?${COL_DELIMITER}\s*?$\n?/`,
-    `/^${COL_DELIMITER}\s*?${COL_BREAK_STRS[2]}\s*?${COL_DELIMITER}\s*?$\n?/`,
-    `/^${COL_DELIMITER}\s*?${COL_BREAK_STRS[3]}\s*?${COL_DELIMITER}\s*?$\n?/`,
-    `/^${COL_DELIMITER}\s*?${COL_BREAK_STRS[0]}\s*?${COL_DELIMITER}\s*?$\n?/`,
-    `/^${COL_DELIMITER}\s*?${COL_BREAK_STRS[1]}\s*?${COL_DELIMITER}\s*?$\n?/`,
-    `/^${COL_DELIMITER}\s*?${COL_BREAK_STRS[2]}\s*?${COL_DELIMITER}\s*?$\n?/`,
-    `/^${COL_DELIMITER}\s*?${COL_BREAK_STRS[3]}\s*?${COL_DELIMITER}\s*?$\n?/`,
-    `/^ *?(?:\\?)\\${COL_BREAK_STRS[2]} *?$\n?/`,
-    `/^:{3,} *${COL_BREAK_STRS[2]} *(?:(?:$\n^)?| *):{3,} *$/`
+    `^${COL_DELIMITER}\\s*?${COL_BREAK_STRS}\\s*?${COL_DELIMITER}\\s*?$\\n?`,
+    `^ *?(?:\\?)${COL_BREAK_STRS} *?$\\n?`,
+    `^:{3,} *${COL_BREAK_STRS} *(?:(?:$\\n^)?| *):{3,} *$`
 ];
 export function checkForParagraphInnerColEndTag(text: string): RegExpExecArray | null {
 
@@ -204,73 +171,46 @@ export function checkForParagraphInnerColEndTag(text: string): RegExpExecArray |
     return null;
 }
 
-const COL_ELEMENT_INNER_TEXT_REGEX_STRS: string[] = [`= *${COL_BREAK_STRS[0]} *=`,
-                                                    `= *${COL_BREAK_STRS[1]} *=`,
-                                                    `= *${COL_BREAK_STRS[2]} *=`,
-                                                    `= *${COL_BREAK_STRS[3]} *=`]
-const COL_ELEMENT_INNER_TEXT_REGEX_ARR: RegExp[] = [];
-for(let i = 0; i < COL_ELEMENT_INNER_TEXT_REGEX_STRS.length; i++) {
-    COL_ELEMENT_INNER_TEXT_REGEX_ARR.push(new RegExp(COL_ELEMENT_INNER_TEXT_REGEX_STRS[i]));
-}
+const COL_ELEMENT_INNER_TEXT_REGEX_STRS = `= *${COL_BREAK_STRS} *=`
+const COL_ELEMENT_INNER_TEXT_REGEX_ARR = new RegExp(COL_ELEMENT_INNER_TEXT_REGEX_STRS);
 export function elInnerTextContainsColEndTag(text: string): boolean {
 
     let found = false;
-    for(let i = 0; i< COL_ELEMENT_INNER_TEXT_REGEX_ARR.length; i++) {
-
-        if(COL_ELEMENT_INNER_TEXT_REGEX_ARR[i].test(text)) {
-            found = true;
-            break;
-        }
+    if(COL_ELEMENT_INNER_TEXT_REGEX_ARR.test(text)) {
+        found = true;
     }
-
     return found;
 }
 
-const COL_SETTINGS_REGEX_STRS = [`\`\`\`${COL_SETTINGS_STRS[0]}`,
-                                 `\`\`\`${COL_SETTINGS_STRS[1]}`,
-                                 `\`\`\`${COL_SETTINGS_STRS[2]}`];
-const COL_SETTINGS_REGEX_ARR: RegExp[] = [];
-for(let i = 0; i < COL_SETTINGS_REGEX_STRS.length; i++) {
-    COL_SETTINGS_REGEX_ARR.push(new RegExp(COL_SETTINGS_REGEX_STRS[i]));
-}
+const COL_SETTINGS_REGEX_STRS = `\`\`\`${COL_SETTINGS_STRS}`;
+const COL_SETTINGS_REGEX_ARR = new RegExp(COL_SETTINGS_REGEX_STRS);
 export function containsColSettingsTag(text: string): boolean {
 
     let found = false;
-    for(let i = 0; i< COL_SETTINGS_REGEX_ARR.length; i++) {
-
-        if(COL_SETTINGS_REGEX_ARR[i].test(text)) {
-            found = true;
-            break;
-        }
+    if(COL_SETTINGS_REGEX_ARR.test(text)) {
+        found = true;
     }
-
     return found;
 }
 
 export function findSettingsCodeblock(text: string): StartTagRegexMatch {
-
     let found = false;
     let startPosition = -1;
     let endPosition = -1
     let matchLength = 0;
-    for(let i = 0; i< COL_SETTINGS_REGEX_ARR.length; i++) {
+    let regexData = COL_SETTINGS_REGEX_ARR.exec(text)
+    if(regexData !== null && regexData.length > 0) {
 
-        let regexData = COL_SETTINGS_REGEX_ARR[i].exec(text)
+        found = true;
+        startPosition = regexData.index
+        matchLength = regexData[0].length;
+        endPosition = startPosition + matchLength;
+
+        let remainingText = text.slice(endPosition)
+        regexData = CODEBLOCK_END_REGEX.exec(remainingText)
         if(regexData !== null && regexData.length > 0) {
-
             found = true;
-            startPosition = regexData.index
-            matchLength = regexData[0].length;
-            endPosition = startPosition + matchLength;
-
-            let remainingText = text.slice(endPosition)
-            regexData = CODEBLOCK_END_REGEX.exec(remainingText)
-            if(regexData !== null && regexData.length > 0) {
-
-                found = true;
-                endPosition += regexData.index + regexData[0].length 
-            }
-            break;
+            endPosition += regexData.index + regexData[0].length 
         }
     }
 
@@ -283,13 +223,7 @@ export function findSettingsCodeblock(text: string): StartTagRegexMatch {
     };
 }
 
-const CODEBLOCK_START_REGEX_STR: string = COL_START_STRS.reduce((prev, cur) => {
-    if(prev === "") {
-        return cur;
-    }
-    return `${prev}|${cur}`;
-}, "")
-const START_CODEBLOCK_REGEX: RegExp = new RegExp(`\`\`\`(:?${CODEBLOCK_START_REGEX_STR})(.*?)\`\`\``, "ms");
+const START_CODEBLOCK_REGEX = new RegExp(`\`\`\`(:?${COL_START_STRS})(.*?)\`\`\``, "ms");
 
 export function findStartCodeblock(text: string): StartTagRegexMatch {
 
