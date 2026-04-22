@@ -88,8 +88,8 @@ export abstract class RegionManager {
 
     /**
      * Adds a new object to the region by finding where it should be relative to its siblings.
-     * @param siblingsAbove The Markdown text rendered elements for sibilings above this element in the dom
-     * @param siblingsBelow The Markdown text rendered elements for sibilings below this element in the dom
+     * @param siblingsAbove The Markdown text rendered elements for siblings above this element in the dom
+     * @param siblingsBelow The Markdown text rendered elements for siblings below this element in the dom
      * @param obj The object to add.
      * @returns Returns the index at which the object has been added.
      */
@@ -102,7 +102,7 @@ export abstract class RegionManager {
         if (siblingsAbove.children.length > 0) {
 
             /**
-             * We want to find the first sibling withouth "" for an inner text so we can use that to anchor our
+             * We want to find the first sibling without "" for an inner text so we can use that to anchor our
              * element into the domList. For most items the first element before our new element will have the proper
              * innerText. Sometimes other elements are empty and were causing issues.
              * 
@@ -222,7 +222,7 @@ export abstract class RegionManager {
     }
 
     /**
-     * This fuction is called when a start tag is removed from view meaning
+     * This function is called when a start tag is removed from view meaning
      * our parent element storing the multi-column region is removed. It
      * removes the CSS class from all of the elements so they will be
      * re-rendered in the preview window.
@@ -253,7 +253,7 @@ export abstract class RegionManager {
          * This function acts as the update loop for the multi-column regions.
          * Here we loop through all of the elements within the rendered region and
          * potentially update how things are rendered. We need to do this for
-         * compatability with other plugins.
+         * compatibility with other plugins.
          *
          * If the multi-column region is rendered before other plugins that effect
          * content within the region our rendered data may not properly display
@@ -349,11 +349,11 @@ export abstract class RegionManager {
      * the element contains a task-list-item class. If so it loops through all
      * items in the list and fixes their checkboxes to properly fire an event.
      * The new checkbox calls the click function on the original checkbox so
-     * compatability with other plugins *should* remain.
+     * compatibility with other plugins *should* remain.
      * @param domElement
-     * @param initalizeCheckboxes
+     * @param initializeCheckboxes
      */
-    protected fixClonedCheckListButtons(domElement: TaskListDOMObject, initalizeCheckboxes: boolean = false) {
+    protected fixClonedCheckListButtons(domElement: TaskListDOMObject, initializeCheckboxes: boolean = false) {
 
         if(domElement.originalElement === null || domElement.clonedElement === null) {
             return;
@@ -365,10 +365,10 @@ export abstract class RegionManager {
         let clonedListCheckboxes = Array.from(clonedElement.getElementsByClassName("task-list-item")) as HTMLElement[];
         let originalListCheckboxes = Array.from(element.getElementsByClassName("task-list-item")) as HTMLElement[];
 
-        if (initalizeCheckboxes === true) {
+        if (initializeCheckboxes === true) {
 
             domElement.originalCheckboxes = originalListCheckboxes;
-            // When we initalize we remove the old input checkbox that contains
+            // When we initialize we remove the old input checkbox that contains
             // the weird callback situation causing the bug. Then we create a new
             // checkbox to replace it and set it up to fire the click event on
             // the original checkbox so functionality is restored.
@@ -434,7 +434,7 @@ export abstract class RegionManager {
         /**
          * If our element is of "specialRender" type it *may* need to be rendered
          * using the original element rather than a copy. For example, an element
-         * may have an onClick event that would not get coppied to the clone.
+         * may have an onClick event that would not get copied to the clone.
          *
          * If we just moved these elements into the region it would get
          * moved back out into the original location in the DOM by obsidian
@@ -643,7 +643,7 @@ function updatePDFEmbed(domElement: DOMObject) {
     for (let i = clonedElement.children.length - 1; i >= 0; i--) {
         clonedElement.children[i].detach();
     }
-    clonedElement.appendChild(createErrorElement("Due to an update to Obsidian's PDF viewer, PDF embeds are currently not supported.\nSorry for the inconvienence."))
+    clonedElement.appendChild(createErrorElement("Due to an update to Obsidian's PDF viewer, PDF embeds are currently not supported.\nSorry for the inconvenience."))
     return
 }
 
@@ -672,8 +672,8 @@ function reRenderDataviewJS(domElement: DOMObject) {
         clonedCanvas.height = originalCanvas.height;
 
         if(clonedCanvas.width === 0 || clonedCanvas.height === 0){
-            // Dont want to render if the width is 0 as it throws an error
-            // would happen if the old canvas hasnt been rendered yet.
+            // Don't want to render if the width is 0 as it throws an error
+            // would happen if the old canvas hasn't been rendered yet.
             return clonedCanvas;
         } 
 

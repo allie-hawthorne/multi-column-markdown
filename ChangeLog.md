@@ -29,7 +29,7 @@
     - Use the new command "Toggle Mobile Rendering - Multi-Column Markdown" to toggle between rendered and un-rendered modes.
     - Command is available and will toggle setting on desktop but only effects mobile rendering.
 - Fixed a bug that caused internal and external links to not properly open within live preview.
-- Made an adjustment to interal embeds which should reduce flickering when placed within column region.
+- Made an adjustment to internal embeds which should reduce flickering when placed within column region.
 
 # **0.7.3**
 - Added option to create full width single column regions. Use "column size: full" to enable.
@@ -55,12 +55,12 @@
         - Updating to 0.7.0 to enable this feature may require a restart of Obsidian.
         - The styling of the Live Preview columns is **very** theme dependent as Multi-Column Markdown mostly only handles the layout.
         - All standard markdown syntax is fully supported, however cross compatibility with other plugins may or may not be supported.
-            - Due to how custom live preview plugins are implemented within CodeMirror6 and hook into Obsidian I can not guarentee all plugins will render properly within live preview at this point.
+            - Due to how custom live preview plugins are implemented within CodeMirror6 and hook into Obsidian I can not guarantee all plugins will render properly within live preview at this point.
             - *Most* plugins retain their cross compatibility when viewing columns in Reading mode.
 
 - ## **New start region syntax**
     - You can now define the start of a multi-column region and it's settings as a single codeblock.
-    - The old start tag syntax will begin to be slowly depricated by this new codeblock syntax.
+    - The old start tag syntax will begin to be slowly deprecated by this new codeblock syntax.
 - ## **Other Changes and Bug Fixes**
     - Added option to define the spacing between the columns in a new setting option (per feature request.)
     - Added option to define if columns should cut off any overflowing content, set default to make overflow auto scroll.
@@ -68,7 +68,7 @@
         - This is fixed for all column regions, but appears to perform better when using the new all in one codeblock start and settings regions. 
     - Fixed Single column layout issues and PDF export issues.
     - Fixed issue with settings not being parsed due to extra leading or trailing white-space.
-    - Fixed bug where some theme stylings were being drawn but not usable or interactable.
+    - Fixed bug where some theme stylings were being drawn but not usable or intractable.
     - Updated layout of columns to be more clean and uniform.
 
 # **0.6.3**

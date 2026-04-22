@@ -1,5 +1,5 @@
 /**
- * File: /src/live_preview/cm6_livePreivew_onClickFix.ts                       *
+ * File: /src/live_preview/cm6_livePreview_onClickFix.ts                       *
  * Created Date: Friday, March 24th 2023, 6:10 pm                              *
  * Author: Cameron Robinson                                                    *
  *                                                                             *
@@ -13,7 +13,7 @@
  * management which causes the viewport to snap to the bottom of the document
  * on user click interaction. 
  * 
- * This CM6 plugin make the editing experience with MCM more user fiendly by snapping 
+ * This CM6 plugin make the editing experience with MCM more user-friendly by snapping 
  * the view back to the cursor after Obsidian has performed it's full LP redraw, and 
  * culled out unneeded elements from the LP view.
  * 
@@ -435,7 +435,7 @@ function transactionSwappedEditorFile(transaction: Transaction, scrollStateManag
 	}
 
 	// On new document load the cursor is placed at the beginning of the file.
-	// If cursor is not at this location we know it isnt document load.
+	// If cursor is not at this location we know it isn't document load.
 	if(transaction.state.selection.ranges[0].from !== 0 &&
 	   transaction.state.selection.ranges[0].to   !== 0) {
 	   return false;

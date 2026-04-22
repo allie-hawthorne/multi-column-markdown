@@ -141,7 +141,7 @@
     color: var(--text-normal);
 }
 
-.cm-preview-code-block.preivew-mcm-start-block {
+.cm-preview-code-block.preview-mcm-start-block {
     height: 0pt !important; 
     padding: 0pt !important;
 }

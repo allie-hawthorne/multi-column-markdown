@@ -11,7 +11,7 @@
 --- end-multi-column
 
 **Rendered as:**
-![Eample_2Column](https://github.com/ckRobinson/multi-column-markdown/blob/master/images/Example_2Column.png?raw=true)
+![Example_2Column](https://github.com/ckRobinson/multi-column-markdown/blob/master/images/Example_2Column.png?raw=true)
 
 <br>
 
@@ -62,7 +62,7 @@ border: off\
 --- end-multi-column
 
 **Rendered as:**
-![Eample_3Column_1](https://github.com/ckRobinson/multi-column-markdown/blob/master/images/Example_3Column_1.png?raw=true)
+![Example_3Column_1](https://github.com/ckRobinson/multi-column-markdown/blob/master/images/Example_3Column_1.png?raw=true)
 
 <br>
 
@@ -88,7 +88,7 @@ largest column: center\
 --- end-multi-column
 
 **Rendered as:**
-![Eample_3Column_2](https://github.com/ckRobinson/multi-column-markdown/blob/master/images/Example_3Column_2.png?raw=true)
+![Example_3Column_2](https://github.com/ckRobinson/multi-column-markdown/blob/master/images/Example_3Column_2.png?raw=true)
 
 <br>
 
@@ -125,7 +125,7 @@ Multi-Column Reflow:\
 &nbsp;&nbsp;\- shadow: off\
 \-\-\-
 # Lorem ipsum 
-Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Posuere lorem ipsum dolor sit amet. Pretium lectus quam id leo in vitae turpis massa sed. Et malesuada fames ac turpis egestas integer eget. Aliquam ultrices sagittis orci a scelerisque purus semper. Posuere ac ut consequat semper viverra nam. Ut aliquam purus sit amet. Purus faucibus ornare suspendisse sed nisi. Dolor magna eget est lorem ipsum dolor sit amet. Ullamcorper velit sed ullamcorper morbi.
+Dolor sit amet, consectetur adipiscing edit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Posuere lorem ipsum dolor sit amet. Pretium lectus quam id leo in vitae turpis massa sed. Et malesuada fames ac turpis egestas integer eget. Aliquam ultrices sagittis orci a scelerisque purus semper. Posuere ac ut consequat semper viverra nam. Ut aliquam purus sit amet. Purus faucibus ornare suspendisse sed nisi. Dolor magna eget est lorem ipsum dolor sit amet. Ullamcorper velit sed ullamcorper morbi.
 
 Duis convallis convallis tellus id interdum. Orci dapibus ultrices in iaculis nunc sed. Ac turpis egestas integer eget aliquet nibh. Dui sapien eget mi proin sed libero. Magna ac placerat vestibulum lectus mauris ultrices. 
 

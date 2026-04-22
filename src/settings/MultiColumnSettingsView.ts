@@ -67,7 +67,7 @@ export default class MultiColumnSettingsView extends PluginSettingTab {
         this.containerEl.createEl("hr", { attr: {"style": "margin-top: 1px; margin-bottom: 0.75em;"} })
         const dangerZoneContainerEl = this.containerEl.createDiv();
 
-        this.buildUpdateDepricated(dangerZoneContainerEl);
+        this.buildUpdateDeprecated(dangerZoneContainerEl);
         this.buildFixMissingIDs(dangerZoneContainerEl);
 
         this.containerEl.createEl("br")
@@ -123,7 +123,7 @@ export default class MultiColumnSettingsView extends PluginSettingTab {
         let docFrag = new DocumentFragment();
         docFrag.createDiv({}, div => {
             div.createSpan({}, span => {
-                span.innerText = "Sets the defalut behavior when determining whether to align table to text alignment.";
+                span.innerText = "Sets the default behavior when determining whether to align table to text alignment.";
             });
             div.createEl("br");
             div.createEl("ul").createEl("li", { text: "This value is overwritten when defining the column setting: 'Align Tables to Text Alignment: true/false'" })
@@ -131,7 +131,7 @@ export default class MultiColumnSettingsView extends PluginSettingTab {
         return docFrag;
     }
 
-    private buildUpdateDepricated(dangerZoneContainerEl: HTMLDivElement) {
+    private buildUpdateDeprecated(dangerZoneContainerEl: HTMLDivElement) {
 
         let docFrag = new DocumentFragment();
         docFrag.createDiv({}, div => {
@@ -146,12 +146,12 @@ export default class MultiColumnSettingsView extends PluginSettingTab {
             });
             div.createSpan({}, span => {
                 span.setAttr("style", "color: var(--text-error);");
-                span.innerText = "This action modifies any note file with depricated syntax and could lead to corrupted file text.";
+                span.innerText = "This action modifies any note file with deprecated syntax and could lead to corrupted file text.";
             });
             div.createEl("br");
             div.createSpan({}, span => {
                 span.setAttr("style", "color: var(--text-error);");
-                span.innerText = "No guarentee is given. Please make sure to back your vault up first.";
+                span.innerText = "No guarantee is given. Please make sure to back your vault up first.";
             });
         });
         let modalDescriptionEl = createDiv({}, div => {
@@ -160,7 +160,7 @@ export default class MultiColumnSettingsView extends PluginSettingTab {
             div.createSpan({ text: "Please confirm you have backed up your vault." });
         });
         new Setting(dangerZoneContainerEl)
-            .setName("Update ALL depricated Multi-Column syntax.")
+            .setName("Update ALL deprecated Multi-Column syntax.")
             .setDesc(docFrag)
             .addButton((b) => b.setButtonText("Update Syntax").onClick(() => {
                 const modal = ConfirmModal.confirmModalWithElement(this.app, modalDescriptionEl, { primary: "Confirm", secondary: "Cancel" });
@@ -181,7 +181,7 @@ export default class MultiColumnSettingsView extends PluginSettingTab {
         let docFrag = new DocumentFragment();
         docFrag.createDiv({}, div => {
             div.createSpan({}, span => {
-                span.innerText = "This will only modify column regions without a pre-defined ID, and which use the up to date core syntax. Will not modify depricated syntax or fenced-divs.";
+                span.innerText = "This will only modify column regions without a pre-defined ID, and which use the up to date core syntax. Will not modify deprecated syntax or fenced-divs.";
             });
             div.createEl("br");
             div.createEl("br");
@@ -201,7 +201,7 @@ export default class MultiColumnSettingsView extends PluginSettingTab {
             div.createEl("br");
             div.createSpan({}, span => {
                 span.setAttr("style", "color: var(--text-error);");
-                span.innerText = "No guarentee is given. Please make sure to back your vault up first.";
+                span.innerText = "No guarantee is given. Please make sure to back your vault up first.";
             });
         });
         let modalDescriptionEl = createDiv({}, div => {

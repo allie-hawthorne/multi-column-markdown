@@ -12,7 +12,7 @@ import { MultiColumnSettings, ColumnLayout, BorderOption, ShadowOption, getDefau
 /**
  * Here we define all of the valid settings strings that the user can enter for each setting type.
  * The strings are then mapped twice, first to a valid regex string that searches for the setting
- * name, ignoring all extra spaces and letter case, and then maped to a RegEx object to be used 
+ * name, ignoring all extra spaces and letter case, and then mapped to a RegEx object to be used 
  * when parsing.
  */
 const COL_POSITION_OPTION_STRS: string[] = [
@@ -526,7 +526,7 @@ function parseForSingleColumnLocation(locationString: string): ColumnLayout{
         case "leftmargin":
         case "leftalign":
         case "leftaligned":
-        case "leftalignement":
+        case "leftalignment":
         case "first":
         case "start":
         case "beginning":

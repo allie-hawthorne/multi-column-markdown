@@ -5,7 +5,7 @@ export function createColBreakWarning(type: ElementColumnBreakType, errorManager
 
     let typeErrorStr = ""
     if(type === ElementColumnBreakType.preBreak) {
-        typeErrorStr = "at the begining of another element"
+        typeErrorStr = "at the beginning of another element"
     }
     if(type === ElementColumnBreakType.postBreak) {
         typeErrorStr = "at the end of another element"

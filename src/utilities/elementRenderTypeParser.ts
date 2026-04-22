@@ -32,11 +32,11 @@ export type ElementRenderType = typeof ALL_ELEMENT_RENDER_TYPES[number];
 
 export function getElementRenderType(element: HTMLElement): ElementRenderType {
 
-    if(isEmbededImage(element) === true) {
+    if(isEmbeddedImage(element) === true) {
         return "imageEmbed"
     }
 
-    if(isButtonPlugin_CrossCompatibilty(element) === true) {
+    if(isButtonPlugin_CrossCompatibility(element) === true) {
         return "buttonPlugin"
     }
 
@@ -78,7 +78,7 @@ export function getElementRenderType(element: HTMLElement): ElementRenderType {
     /**
      * Look for specific kinds of elements by their CSS class names here. These 
      * are going to be brittle links as they rely on other plugin definitions but
-     * as this is only adding in extra compatability to the plugins defined here 
+     * as this is only adding in extra compatibility to the plugins defined here 
      * it should be ok.
      * 
      * These may be classes on one of the simple elements (such as a paragraph)
@@ -96,7 +96,7 @@ export function getElementRenderType(element: HTMLElement): ElementRenderType {
 
     /**
      * This checks for special types of elements that should be rendered normally. Is
-     * slightly redundant with next check but differentiates between types of ements 
+     * slightly redundant with next check but differentiates between types of elements 
      * being checked.
      */
     if(hasAdmonition(element) === true) {
@@ -112,7 +112,7 @@ export function getElementRenderType(element: HTMLElement): ElementRenderType {
     }
 
     /**
-     * If we didnt find a special element we want to check for simple elements
+     * If we didn't find a special element we want to check for simple elements
      * such as paragraphs or lists. In the current implementation we only set up
      * the special case for "specialRender" elements so this *should* be saving
      * some rendering time by setting these tags properly.
@@ -217,7 +217,7 @@ function hasDataviewJSCanvas(element: HTMLElement) {
 
     /**
      * This means only dataviewJS chart canvas elements should be rendered properly. Other canvases will 
-     * need thier own case put in or the restriction removed after testing.
+     * need their own case put in or the restriction removed after testing.
      */
     return canvas !== null && isDataviewJS 
 }
@@ -259,7 +259,7 @@ function isCustomIFrame(element: HTMLElement) {
     return isFrame;
 }
 
-export function isButtonPlugin_CrossCompatibilty(element: HTMLElement) {
+export function isButtonPlugin_CrossCompatibility(element: HTMLElement) {
 
     if(element.hasClass("block-language-button")) {
         return true;
@@ -273,7 +273,7 @@ export function isButtonPlugin_CrossCompatibilty(element: HTMLElement) {
     return false;
 }
 
-function isEmbededImage(element: HTMLElement): boolean {
+function isEmbeddedImage(element: HTMLElement): boolean {
     
     let img = element.getElementsByTagName("img")[0];
     if(img === null || 

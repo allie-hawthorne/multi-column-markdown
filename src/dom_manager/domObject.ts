@@ -182,7 +182,7 @@ export class DOMObject {
             if(checkNode.nodeName === "P") {
 
                 // Paragraphs simply remove the col-break tag
-                // we set our element here incase we need to display an error.
+                // we set our element here in case we need to display an error.
                 paragraph = checkNode;
                 checkNode.innerText = `${pre}${post}`;
             }
@@ -206,7 +206,7 @@ export class DOMObject {
                 }
             }
             else {
-                console.debug(`Element Type: ${checkNode.nodeName}, does not currently support appened column-breaks.`, checkNode.cloneNode(true));
+                console.debug(`Element Type: ${checkNode.nodeName}, does not currently support appended column-breaks.`, checkNode.cloneNode(true));
                 // if(paragraph) {
                 //     paragraph.innerText = `${pre}${post}`;
                 // }
@@ -214,7 +214,7 @@ export class DOMObject {
 
             // console.debug("Checking where column break is", startIndex, endIndex, text.length);
             if(startIndex === 0) {
-                // console.debug("Column break at begining of element.")
+                // console.debug("Column break at beginning of element.")
                 this.elementIsColumnBreak = ElementColumnBreakType.preBreak;
             }
             else if(endIndex === text.length) {

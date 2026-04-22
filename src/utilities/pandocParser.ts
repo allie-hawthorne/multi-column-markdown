@@ -47,11 +47,11 @@ export function pandocNumberOfColumnsToValue(value: PandocNumberOfColumns): numb
 const PANDOC_COL_DOT_COUNT_NAME = "colDotCount";
 const PANDOC_COL_NODOT_COUNT_NAME = "colCount";
 const PANDOC_COL_CONTENT = "colContent";
-const PANDOC_COl_SETTINGS = "colSettings";
+const PANDOC_COL_SETTINGS = "colSettings";
 const PANDOC_REGEX_STR: string = (() => {
 
     let nums = PANDOC_ENGLISH_NUMBER_OF_COLUMNS.join("|");
-    let regex_strings = `:{3,} *(?:\\{ *\\.(?<${PANDOC_COL_DOT_COUNT_NAME}>(?:${nums}|))(?:[-_]|)columns(?<${PANDOC_COl_SETTINGS}>.*)\\}|(?<${PANDOC_COL_NODOT_COUNT_NAME}>(?:${nums}|))(?:[-_]|)columns)(?:[ :]*)$\\n?`;
+    let regex_strings = `:{3,} *(?:\\{ *\\.(?<${PANDOC_COL_DOT_COUNT_NAME}>(?:${nums}|))(?:[-_]|)columns(?<${PANDOC_COL_SETTINGS}>.*)\\}|(?<${PANDOC_COL_NODOT_COUNT_NAME}>(?:${nums}|))(?:[-_]|)columns)(?:[ :]*)$\\n?`;
     return regex_strings;
 })();
 const PANDOC_REGEX = new RegExp(PANDOC_REGEX_STR, "m");
@@ -72,7 +72,7 @@ export function findPandoc(text: string): PandocRegexData {
         data.content = regionData.content;
         data.matchLength = data.endPosition - data.startPosition;
 
-        data.userSettings = regexData.groups[PANDOC_COl_SETTINGS] ? regexData.groups[PANDOC_COl_SETTINGS] : "";
+        data.userSettings = regexData.groups[PANDOC_COL_SETTINGS] ? regexData.groups[PANDOC_COL_SETTINGS] : "";
         data.columnCount = regexData.groups[PANDOC_COL_DOT_COUNT_NAME] ? regexData.groups[PANDOC_COL_DOT_COUNT_NAME] : regexData.groups[PANDOC_COL_NODOT_COUNT_NAME];
         return data;
     }
@@ -216,7 +216,7 @@ function getNextPandocFence(workingText: string): { result: RegExpExecArray; typ
 export function findPandocStart(text: string): StartTagRegexMatch {
 
     let startRegion = defaultStartRegionData();
-    startRegion.regionType = "PADOC";
+    startRegion.regionType = "PANDOC";
 
     let regexData = PANDOC_REGEX.exec(text);
     if (regexData !== null && regexData.length > 0) {
@@ -246,7 +246,7 @@ function defaultPandocRegexData(): PandocRegexData {
         content: "",
         userSettings: "",
         columnCount: "",
-        regionType: "PADOC"
+        regionType: "PANDOC"
     };
 }
 

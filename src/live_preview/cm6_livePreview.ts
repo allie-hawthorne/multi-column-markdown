@@ -48,13 +48,13 @@ export const multiColumnMarkdown_StateField = StateField.define<DecorationSet>({
 				// flag and skip all other node iterations, potentially saving a lot of compute time.
 				// 
                 // We only want to run the generation once per state change. If
-                // a previous node has sucessfully generated regions we ignore all
+                // a previous node has successfully generated regions we ignore all
                 // other nodes in the state.
                 if(ignoreFurtherIterations === true) {
                     return;
                 }
 
-				// We want to run on the whole file so we dont just look for a single token.
+				// We want to run on the whole file so we don't just look for a single token.
 				const tokenProps = node.type.prop<string>(tokenClassNodeProp);
 				if (tokenProps !== undefined) {
 					return;
@@ -131,7 +131,7 @@ export const multiColumnMarkdown_StateField = StateField.define<DecorationSet>({
 
 						const editorInfo = transaction.state.field(editorInfoField);
 
-						// At this point if the cursor isnt in the region we pass the data to the
+						// At this point if the cursor isn't in the region we pass the data to the
 						// element to be rendered.
 						builder.add(
 							startIndex,
@@ -289,7 +289,7 @@ function getNextRegion(workingFileText: string, startIndexOffset: number, wholeD
 		return data;
 	}
 
-	if(region.dataType === "PADOC") {
+	if(region.dataType === "PANDOC") {
 
 		let pandocData: PandocRegexData = region.data as PandocRegexData;
 		let startIndex = startIndexOffset + pandocData.startPosition;
@@ -314,7 +314,7 @@ function findNextRegion(workingFileText: string): { dataType: RegionType, data: 
 	// Now search for both kinds and determine what to do after search.
 	let startTagData_codeblockStart: { dataType: RegionType, data: StartTagRegexMatch } = {dataType: "CODEBLOCK", data: findStartCodeblock(workingFileText) };
 	let startTagData_originalStart: { dataType: RegionType, data: StartTagRegexMatch } = {dataType: "ORIGINAL", data: findStartTag(workingFileText) };
-	let pandocData: { dataType: RegionType, data: PandocRegexData } = {dataType: "PADOC", data: findPandoc(workingFileText) }
+	let pandocData: { dataType: RegionType, data: PandocRegexData } = {dataType: "PANDOC", data: findPandoc(workingFileText) }
 
 	if(startTagData_codeblockStart.data.found === false && 
 	   startTagData_originalStart.data.found === false &&
@@ -380,7 +380,7 @@ function getSettingsData(regionData: RegionData): {settings: MultiColumnSettings
 		return parseCodeBlockSettings(settingsStartData)
 	}
 
-	if(regionData.regionType === "PADOC") {
+	if(regionData.regionType === "PANDOC") {
 
 		let pandocData = regionData as PandocRegionData
 		return {

@@ -50,7 +50,7 @@ export class AutoLayoutRegionManager extends RegionManager {
      * user defined number of children with the proper css classes to be rendered properly.
      * 
      * @param parentElement The element that the multi-column region will be rendered under.
-     * @param regionElements The list of DOM objects that will be coppied under the parent object
+     * @param regionElements The list of DOM objects that will be copied under the parent object
      * @param settings The settings the user has defined for the region.
      */
     private renderColumnMarkdown(parentElement: HTMLElement, regionElements: DOMObject[], settings: MultiColumnSettings, isLivePreview: boolean = false) {
@@ -83,7 +83,7 @@ export class AutoLayoutRegionManager extends RegionManager {
         }
 
         // Remove every other child from the parent so 
-        // we dont end up with multiple sets of data. This should
+        // we don't end up with multiple sets of data. This should
         // really only need to loop once for i = 0 but loop just
         // in case.
         for (let i = parentElement.children.length - 1; i >= 0; i--) {
@@ -253,7 +253,7 @@ export class AutoLayoutRegionManager extends RegionManager {
          * Attempt to balanced the elements. We need to iterate over the elements multiple times because
          * our initial balance estimate may not be perfectly balanced due to different column widths causing 
          * elements within them to be of different heights. This can cause the elements to jump around on 
-         * subsiquent update loops which is not ideal. Here we render the elements to the screen and update 
+         * subsequent update loops which is not ideal. Here we render the elements to the screen and update 
          * their height after being rendered into the estimated position. 
          * 
          * Once everything is rendered we check all of the column heights against our last iteration and 

@@ -102,7 +102,7 @@ export class MultiColumnMarkdown_LivePreview_Widget extends WidgetType {
 
         let errorManager = new RegionErrorManager(createDiv());
         if(regionType === "CODEBLOCK") {
-            errorManager.addErrorMessage("The codeblock region start syntax has been depricated. Please manually update to the current syntax defined in the ReadMe, run the \"Fix Multi-Column Syntax in Current File\" from the Command Palette, or use the \"Update Depricated Syntax\" command found in the plugin settings window. You must reload the file for changes to take effect.")
+            errorManager.addErrorMessage("The codeblock region start syntax has been deprecated. Please manually update to the current syntax defined in the ReadMe, run the \"Fix Multi-Column Syntax in Current File\" from the Command Palette, or use the \"Update Deprecated Syntax\" command found in the plugin settings window. You must reload the file for changes to take effect.")
         }
 
         (async () => {
@@ -419,7 +419,7 @@ function fixPDFRender(el: Element, source: string): Element {
         return el;
     }
 
-    return createLPErrorElement("Due to an update to Obsidian's PDF viewer, PDF embeds are currently not supported.\nSorry for the inconvienence.", alt, src);
+    return createLPErrorElement("Due to an update to Obsidian's PDF viewer, PDF embeds are currently not supported.\nSorry for the inconvenience.", alt, src);
 }
 
 function fixImageRender(el: Element, source: string): Element {
@@ -441,7 +441,7 @@ function fixImageRender(el: Element, source: string): Element {
         return el;
     }
     
-    // If the link source is not an image we dont want to make any adjustments.
+    // If the link source is not an image we don't want to make any adjustments.
     if(isImageExtension(file.extension) === false) {
         return el;
     }
@@ -621,7 +621,7 @@ function checkForColumnBreakErrors(domObject: DOMObject,
         return workingText;
     }
 
-    // make sure the text of the element matche the syntax of what we parsed from the text.
+    // make sure the text of the element match the syntax of what we parsed from the text.
     if(matchText !== endTagText) {
         console.error("Error matching next col-break to current element. Can not continue.")
         return workingText;
@@ -760,7 +760,7 @@ function attemptToFixCheckboxes(domObject: DOMObject, textBeforeElement: string,
         }
 
         if(checkbox.onclick !== null) {
-            console.error("Error: OnClick aready defined, not overwriting method.");
+            console.error("Error: OnClick already defined, not overwriting method.");
             continue;
         }
 

@@ -78,19 +78,19 @@ export class FileDOMManager {
 
     createRegionalManager(regionKey: string, rootElement: HTMLElement, errorManager: RegionErrorManager, renderRegionElement: HTMLElement): RegionManager {
 
-        let regonalContainer = new RegionManagerContainer(this, regionKey, rootElement, renderRegionElement, errorManager);
-        this.regionMap.set(regionKey, regonalContainer);
-        return regonalContainer.getRegion();
+        let regionalContainer = new RegionManagerContainer(this, regionKey, rootElement, renderRegionElement, errorManager);
+        this.regionMap.set(regionKey, regionalContainer);
+        return regionalContainer.getRegion();
     }
 
     getRegionalContainer(regionKey: string): RegionManagerContainer | null {
 
-        let regonalManager = null;
+        let regionalManager = null;
         if(this.regionMap.has(regionKey) === true) {
-            regonalManager = this.regionMap.get(regionKey);
+            regionalManager = this.regionMap.get(regionKey);
         }
 
-        return regonalManager;
+        return regionalManager;
     }
 
     getAllRegionalManagers(): RegionManager[] {

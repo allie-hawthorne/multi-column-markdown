@@ -329,7 +329,7 @@ export function countStartTags(initialText: string): { numberOfTags: number, key
          * after the start tag.
          */
         let tag = text.split("\n")[0];
-        text = text.slice(1); // This moves the text 1 character so we dont match the same tag.
+        text = text.slice(1); // This moves the text 1 character so we don't match the same tag.
 
         // Parse out the key and append to the list.
         let key = getStartTagKey(tag);
@@ -393,8 +393,8 @@ export function getStartBlockOrCodeblockAboveLine(linesAboveArray: string[],
 
     if(tagMatchData.regionType === "CODEBLOCK") {
     
-        let endTagSerachData = findEndTag(textAbove);
-        if(endTagSerachData.found === true) {
+        let endTagSearchData = findEndTag(textAbove);
+        if(endTagSearchData.found === true) {
             return null;
         }
 
@@ -406,8 +406,8 @@ export function getStartBlockOrCodeblockAboveLine(linesAboveArray: string[],
 
     if(tagMatchData.regionType === "ORIGINAL") {
     
-        let endTagSerachData = findEndTag(textAbove);
-        if(endTagSerachData.found === true) {
+        let endTagSearchData = findEndTag(textAbove);
+        if(endTagSearchData.found === true) {
             return null;
         }
 
@@ -430,10 +430,10 @@ export function getStartBlockOrCodeblockAboveLine(linesAboveArray: string[],
         return { startBlockKey, linesAboveArray, startBlockType: "ORIGINAL" };
     }
 
-    if(tagMatchData.regionType === "PADOC") {
+    if(tagMatchData.regionType === "PANDOC") {
 
-        let endTagSerachData = reducePandocRegionToEndDiv(textAbove)
-        if(endTagSerachData.found === true) {
+        let endTagSearchData = reducePandocRegionToEndDiv(textAbove)
+        if(endTagSearchData.found === true) {
             return null;
         }
 
@@ -445,7 +445,7 @@ export function getStartBlockOrCodeblockAboveLine(linesAboveArray: string[],
         return {
             startBlockKey,
             linesAboveArray,
-            startBlockType: "PADOC"
+            startBlockType: "PANDOC"
         }
     }
 
@@ -510,26 +510,26 @@ export function getStartBlockAboveLine(linesAboveArray: string[]): { startBlockK
 export function getEndBlockBelow(linesBelow: string[]): string[] {
 
     // Reduce the array down into a single string so that we can
-    // easily RegEx over the string and find the indicies we're looking for.
+    // easily RegEx over the string and find the indices we're looking for.
     let linesBelowStr = linesBelow.reduce((prev, current) => {
         return prev + "\n"  + current;
     }, "");
-    let endTagSerachData = findEndTag(linesBelowStr);
+    let endTagSearchData = findEndTag(linesBelowStr);
     let startTagSearchData = findStartTag(linesBelowStr);
 
     let sliceEndIndex = -1; // If neither start or end found we return the entire array.
-    if(endTagSerachData.found === true && startTagSearchData.found === false) {
+    if(endTagSearchData.found === true && startTagSearchData.found === false) {
 
-        sliceEndIndex = endTagSerachData.startPosition;
+        sliceEndIndex = endTagSearchData.startPosition;
     }
-    else if(endTagSerachData.found === false && startTagSearchData.found === true) {
+    else if(endTagSearchData.found === false && startTagSearchData.found === true) {
 
         sliceEndIndex = startTagSearchData.startPosition;
     }
-    else if(endTagSerachData.found === true && startTagSearchData.found === true) {
+    else if(endTagSearchData.found === true && startTagSearchData.found === true) {
 
-        sliceEndIndex = endTagSerachData.startPosition;
-        if(startTagSearchData.startPosition < endTagSerachData.startPosition) {
+        sliceEndIndex = endTagSearchData.startPosition;
+        if(startTagSearchData.startPosition < endTagSearchData.startPosition) {
 
             /**
              * If we found a start tag before an end tag we want to use the start tag

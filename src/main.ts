@@ -18,7 +18,7 @@ import { fileStillInView, getUID } from './utilities/utils';
 import { MultiColumnLayoutCSS, MultiColumnStyleCSS } from './utilities/cssDefinitions';
 import { multiColumnMarkdown_StateField } from './live_preview/cm6_livePreview';
 import { parseColumnSettings, parseStartRegionCodeBlockID } from './utilities/settingsParser';
-import { MultiColumnMarkdown_OnClickFix } from './live_preview/cm6_livePreivew_onClickFix';
+import { MultiColumnMarkdown_OnClickFix } from './live_preview/cm6_livePreview_onClickFix';
 import { MultiColumnSettings, getDefaultMultiColumnSettings } from './regionSettings';
 import { HTMLSizing } from './utilities/interfaces';
 import MultiColumnSettingsView from './settings/MultiColumnSettingsView';
@@ -201,7 +201,7 @@ ${editor.getDoc().getSelection()}`
                     new Notice (`Replaced ${linesWithoutIDs.length + numCodeblocksUpdated} missing ID(s) in the current document.`);
                 } catch (e) {
                     new Notice(
-                        "Encountered an error addign IDs to multi-column regions. Please try again later."
+                        "Encountered an error adding IDs to multi-column regions. Please try again later."
                     );
                 }
             }
@@ -451,13 +451,13 @@ ${editor.getDoc().getSelection()}`
          * properly set the element tag within the regional manager.
          */
         if (multiColumnParser.containsEndTag(el.textContent) === true &&
-            parentStartBlock.startBlockType !== "PADOC") {
+            parentStartBlock.startBlockType !== "PANDOC") {
 
             currentObject.elementType = "unRendered";
             regionalManager.updateElementTag(currentObject.UID, DOMObjectTag.endRegion);
         }
         if (containsPandoc.isValidPandocEndTag(linesAboveArray, el.textContent) === true &&
-            parentStartBlock.startBlockType === "PADOC") {
+            parentStartBlock.startBlockType === "PANDOC") {
 
             currentObject.elementType = "unRendered";
             regionalManager.updateElementTag(currentObject.UID, DOMObjectTag.endRegion);
@@ -500,7 +500,7 @@ ${editor.getDoc().getSelection()}`
         
             // Set up our CSS so that the codeblock only renders this data in reading mode
             // source/live preview mode is handled by the CM6 implementation.
-            el.parentElement?.addClass("preivew-mcm-start-block");
+            el.parentElement?.addClass("preview-mcm-start-block");
         
             // To determine what kind of view we are rendering in we need a markdown leaf.
             // Really this should never return here since rendering is only done in markdown leaves.
@@ -550,7 +550,7 @@ ${editor.getDoc().getSelection()}`
              */
             el.classList.add(MultiColumnLayoutCSS.RegionRootContainerDiv)
 
-            let errorManager = new RegionErrorManager(el, ["The codeblock region start syntax has been depricated. Please manually update to the current syntax defined in the ReadMe, run the \"Fix Multi-Column Syntax in Current File\" from the Command Palette, or use the \"Update Depricated Syntax\" command found in the plugin settings window. You must reload the file for changes to take effect."]);
+            let errorManager = new RegionErrorManager(el, ["The codeblock region start syntax has been deprecated. Please manually update to the current syntax defined in the ReadMe, run the \"Fix Multi-Column Syntax in Current File\" from the Command Palette, or use the \"Update Deprecated Syntax\" command found in the plugin settings window. You must reload the file for changes to take effect."]);
             let renderColumnRegion = el.createDiv({
                 cls: MultiColumnLayoutCSS.RegionContentContainerDiv
             })
@@ -573,7 +573,7 @@ ${editor.getDoc().getSelection()}`
                 }
         
                 // We only want to display an error if there are more than 2 of the same id across
-                // the whole document. This prevents erros when obsidian reloads the whole document
+                // the whole document. This prevents errors when obsidian reloads the whole document
                 // and there are two of the same key in the map.
                 if(numMatches >= 2) {
                     if(regionKey === "") {
@@ -587,7 +587,7 @@ ${editor.getDoc().getSelection()}`
             }
             el.id = `MultiColumnID:${regionKey}`
         
-            // If something changes in the codeblock we dont necessarily want to update our
+            // If something changes in the codeblock we don't necessarily want to update our
             // old reference to the region manager. This could be a potential bug area.
             if(createNewRegionManager === true) {
         
@@ -651,7 +651,7 @@ ${editor.getDoc().getSelection()}`
             let settings = getMultiColumnSettingsFromFrontmatter(ctx);
             
             let leaf = getLeafFromFilePath(this.app.workspace, ctx.sourcePath);
-            let clientHeight = calcVisibleClietHeight(leaf, this.app.workspace);
+            let clientHeight = calcVisibleClientHeight(leaf, this.app.workspace);
             if(settings.columnHeight === null) {
                 settings.columnHeight = HTMLSizing.create().setWidth(clientHeight).setUnits("px");
             }
@@ -697,7 +697,7 @@ ${editor.getDoc().getSelection()}`
             let settings = getMultiColumnSettingsFromFrontmatter(ctx);
             let leaf = getLeafFromFilePath(this.app.workspace, ctx.sourcePath);
 
-            let clientHeight = calcVisibleClietHeight(leaf, this.app.workspace);
+            let clientHeight = calcVisibleClientHeight(leaf, this.app.workspace);
             if(settings.columnHeight === null) {
                 settings.columnHeight = HTMLSizing.create().setWidth(clientHeight).setUnits("px");
             }
@@ -764,7 +764,7 @@ ${editor.getDoc().getSelection()}`
         let childrenToRemove = [];
         
         // To export codeblocks we need to get the IDs so we can get the data from our managers.
-        // however since the ID isnt being stored in the element yet this means we need to read
+        // however since the ID isn't being stored in the element yet this means we need to read
         // all of the IDs out of the full document.
         let codeblockStartBlocks = []
         let aFile = this.app.vault.getAbstractFileByPath(sourcePath);
@@ -1049,7 +1049,7 @@ function setupStartTag(el: HTMLElement, ctx: MarkdownPostProcessorContext, fileD
         }
 
         // We only want to display an error if there are more than 2 of the same id across
-        // the whole document. This prevents erros when obsidian reloads the whole document
+        // the whole document. This prevents errors when obsidian reloads the whole document
         // and there are two of the same key in the map.
         if(numMatches >= 2) {
             if(regionID === "") {
@@ -1174,7 +1174,7 @@ function getContentHeightFromLeaf(leaf: WorkspaceLeaf): number {
     return clientHeight - 50;
 }
 
-function calcVisibleClietHeight(leaf: WorkspaceLeaf, workspace: Workspace): number {
+function calcVisibleClientHeight(leaf: WorkspaceLeaf, workspace: Workspace): number {
 
     let clientHeight = 0;
     if (leaf) {
