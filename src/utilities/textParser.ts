@@ -10,13 +10,13 @@ import { parseStartRegionCodeBlockID } from "./settingsParser";
 import { containsPandoc, findPandocStart, reducePandocRegionToEndDiv, getPandocStartData } from "./pandocParser";
 import { RegionType, StartTagRegexMatch, defaultStartRegionData } from "./interfaces";
 
-const COL_START_STRS = "(mcm-start)";
-const COL_END_STRS = "(mcm-end)";
-const COL_BREAK_STRS = "(col-break|column-break)";
-const COL_SETTINGS_STRS = "(mcm-settings)";
-const COL_DELIMITER = "(===|---)";
+const MCM_START = "(mcm-start)";
+const MCM_END = "(mcm-end)";
+const MCM_SETTINGS = "(mcm-settings)";
+const COL_BREAK = "(col-break|column-break)";
+const DELIMITER = "(===|---)";
 
-const START_REGEX_STR = `${COL_DELIMITER} *${COL_START_STRS}(:?[a-zA-Z0-9-_\\s]*)?`;
+const START_REGEX_STR = `${DELIMITER} *${MCM_START}(:?[a-zA-Z0-9-_\\s]*)?`;
 const START_REGEX = new RegExp(START_REGEX_STR);
 
 const START_REGEX_STR_WHOLE_LINE = `^${START_REGEX_STR}$`;
@@ -59,7 +59,7 @@ export function isStartTagWithID(text: string): {isStartTag: boolean, hasKey: bo
     return {isStartTag: false, hasKey: false};
 }
 
-const END_REGEX_STR = `${COL_DELIMITER} *${COL_END_STRS}`
+const END_REGEX_STR = `${DELIMITER} *${MCM_END}`
 const END_REGEX = new RegExp(END_REGEX_STR);
 
 type TagPositioningData = {
@@ -132,9 +132,9 @@ function getEndTagData(text: string) {
     return { found, startPosition, endPosition, matchLength };
 }
 
-const COL_REGEX_STRS: [string,string][] = [[`^${COL_DELIMITER}\\s*?${COL_BREAK_STRS}\\s*?$`   ,""], // [Regex, Regex Flags]
-                                           [`^ *?(?:\\?)${COL_BREAK_STRS} *?$`        ,""],
-                                           [`^:{3,} *${COL_BREAK_STRS} *(?:(?:$\\n^)?| *):{3,} *$` ,"m"]];
+const COL_REGEX_STRS: [string,string][] = [[`^${DELIMITER}\\s*?${COL_BREAK}\\s*?$`   ,""], // [Regex, Regex Flags]
+                                           [`^ *?(?:\\?)${COL_BREAK} *?$`        ,""],
+                                           [`^:{3,} *${COL_BREAK} *(?:(?:$\\n^)?| *):{3,} *$` ,"m"]];
 const COL_REGEX_ARR: RegExp[] = [];
 for(let i = 0; i < COL_REGEX_STRS.length; i++) {
     COL_REGEX_ARR.push(new RegExp(COL_REGEX_STRS[i][0], COL_REGEX_STRS[i][1]));
@@ -154,9 +154,9 @@ export function containsColEndTag(text: string): boolean {
 }
 
 const INNER_COL_END_REGEX_ARR: string[] = [
-    `^${COL_DELIMITER}\\s*?${COL_BREAK_STRS}\\s*?${COL_DELIMITER}\\s*?$\\n?`,
-    `^ *?(?:\\?)${COL_BREAK_STRS} *?$\\n?`,
-    `^:{3,} *${COL_BREAK_STRS} *(?:(?:$\\n^)?| *):{3,} *$`
+    `^${DELIMITER}\\s*?${COL_BREAK}\\s*?${DELIMITER}\\s*?$\\n?`,
+    `^ *?(?:\\?)${COL_BREAK} *?$\\n?`,
+    `^:{3,} *${COL_BREAK} *(?:(?:$\\n^)?| *):{3,} *$`
 ];
 export function checkForParagraphInnerColEndTag(text: string): RegExpExecArray | null {
 
@@ -170,7 +170,7 @@ export function checkForParagraphInnerColEndTag(text: string): RegExpExecArray |
     return null;
 }
 
-const COL_ELEMENT_INNER_TEXT_REGEX_STRS = `= *${COL_BREAK_STRS} *=`
+const COL_ELEMENT_INNER_TEXT_REGEX_STRS = `= *${COL_BREAK} *=`
 const COL_ELEMENT_INNER_TEXT_REGEX_ARR = new RegExp(COL_ELEMENT_INNER_TEXT_REGEX_STRS);
 export function elInnerTextContainsColEndTag(text: string): boolean {
 
@@ -181,7 +181,7 @@ export function elInnerTextContainsColEndTag(text: string): boolean {
     return found;
 }
 
-const COL_SETTINGS_REGEX_STRS = `\`\`\`${COL_SETTINGS_STRS}`;
+const COL_SETTINGS_REGEX_STRS = `\`\`\`${MCM_SETTINGS}`;
 const COL_SETTINGS_REGEX_ARR = new RegExp(COL_SETTINGS_REGEX_STRS);
 export function containsColSettingsTag(text: string): boolean {
 
@@ -222,7 +222,7 @@ export function findSettingsCodeblock(text: string): StartTagRegexMatch {
     };
 }
 
-const START_CODEBLOCK_REGEX = new RegExp(`\`\`\`(:?${COL_START_STRS})(.*?)\`\`\``, "ms");
+const START_CODEBLOCK_REGEX = new RegExp(`\`\`\`(:?${MCM_START})(.*?)\`\`\``, "ms");
 
 export function findStartCodeblock(text: string): StartTagRegexMatch {
 
