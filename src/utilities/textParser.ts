@@ -17,7 +17,7 @@ const COL_BREAK = "(col-break|column-break)";
 
 const DELIMITER = "(===|---)";
 const PANDOC_DELIMITER = "(:::+)";
-const CODE_BLOCK_DELIMITER = "```";
+const CODE_BLOCK_DELIMITER = "(```)";
 
 const START_REGEX_STR = `${DELIMITER} *${MCM_START}(:?[a-zA-Z0-9-_\\s]*)?`;
 const START_REGEX = new RegExp(START_REGEX_STR);
