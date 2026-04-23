@@ -612,7 +612,7 @@ function checkForColumnBreakErrors(domObject: DOMObject,
 
     // Now we have a standard column break but due to changes in obsidian parsing may still 
     // require displaying an error message.
-    let endTagText = domObject.originalElement.innerText
+    let endTagText = domObject.originalElement.innerText.trim();
 
     // make sure the element text is a column break just to be sure. This really should never fail.
     if(containsColEndTag(endTagText) === false) {
