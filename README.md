@@ -51,23 +51,23 @@ You create a multi-column region by defining the start, settings, column-end, an
 
 <br>
 
-Text displayed above.
+Text displayed above columns.
 
---- start-multi-column: ExampleRegion1\
-\```column-settings\
+--- mcm-start: ExampleRegion1\
+\```mcm-settings\
 number of columns: 2\
 largest column: left\
 \```
 
 Text displayed in column 1.
 
-\--- end-column ---
+\--- col-break
 
 Text displayed in column 2.
 
-\--- end-multi-column
+\--- mcm-end
 
-Text displayed below.
+Text displayed below columns.
 
 
 **Rendered as:**
@@ -83,11 +83,7 @@ Text displayed below.
 #### **Start a Multi-Column Region:**
 Each multi-column region must start with either:
 
-> --- start-multi-column: A_unique_region_ID\
-
-or
-
-> --- multi-column-start: A_unique_region_ID_1\
+> --- mcm-start: A_unique_region_ID_1
 
 or
 
@@ -109,19 +105,13 @@ You can also use the "Fix Missing IDs" command which will search the currently o
 > *Any Setting flags (see below)*\
 > \```
 
-> \```column-settings\
-> *Any Setting flags (see below)*\
-> \```
-
 > ::::: {.columns id=A_unique_region_ID_2 *Any Additional Setting flags (see below)*}
 
 <br>
 
 #### **End a Column:**
-\--- column-end \---\
-\--- end-column \---\
 \--- column-break \---\
-\--- break-column \---\
+\--- col-break \---
 
 
 > ::: columnbreak\
@@ -131,8 +121,7 @@ You can also use the "Fix Missing IDs" command which will search the currently o
 <br>
 
 #### **End Multi-Column Region:**
-\--- end-multi-column\
-\--- multi-column-end\
+\--- mcm-end
 
 > :::\
 > _(This end region syntax is only valid when using the Pandoc fenced divs syntax to start a region.)_
@@ -542,34 +531,23 @@ If this is your first Obsidian plugin close and reopen Obsidian and then open th
 These syntax options are currently still supported but are being deprecated for the newer syntax above.
 
 #### **Code-Block Start Tags**
-> \```start-multi-column\
-> \```
-
-and
-
-> \```multi-column-start\
+> \```mcm-start\
 > \```
 
 This syntax has been entirely deprecated due to many compounding issues caused by MCM conflicting with Obsidian syntax. Notes will display an error on each column region until the syntax is updated. You can use the global syntax update feature within the settings window, or the note specific command "Fix Multi-Column Syntax in File" within the Command Palette
 
 #### **Start Multi-Column Region:**
-- === start-multi-column: A_unique_region_ID_2
-- === multi-column-start: A_unique_region_ID_3
+--- mcm-start: A_unique_region_ID_3
 
 #### **Settings Regions**: 
-\```settings\```\
-\```column-settings\```\
-\```multi-column-settings\```
+\```mcm-settings\```
 
 #### **End a Column:**
-- \=== column-end ===
-- \=== end-column ===
-- \=== column-break ===
-- \=== break-column ===
+--- column-break\
+--- col-break
 
 #### **End Multi-Column Region:**
-- \=\=\= end-multi-column
-- \=\=\= multi-column-end
+--- mcm-end
 
 # Change Log
 
