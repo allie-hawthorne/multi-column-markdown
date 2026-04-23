@@ -1,3 +1,7 @@
+### ⚠️⚠️ this plugin is a work-in-progress! ⚠️⚠️
+
+#### for a stable release use the original [here](obsidian://show-plugin?id=multi-column-markdown)
+
 # Multi-Column Markdown
 
 Take your boring markdown document and add some columns to it! With Multi Column Markdown, rather than limiting your document layout to a single linear file, you can define blocks of data to be laid out horizontally next to each other. This additional functionality gives you the freedom to structure your notes in more creative ways.
