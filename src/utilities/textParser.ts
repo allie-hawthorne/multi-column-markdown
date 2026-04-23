@@ -133,7 +133,7 @@ function getEndTagData(text: string) {
     return { found, startPosition, endPosition, matchLength };
 }
 
-const COL_REGEX_STRS: [string,string][] = [[`^${COL_DELIMITER}\\s*?${COL_BREAK_STRS}\\s*?${COL_DELIMITER}\\s*?$`   ,""], // [Regex, Regex Flags]
+const COL_REGEX_STRS: [string,string][] = [[`^${COL_DELIMITER}\\s*?${COL_BREAK_STRS}\\s*?$`   ,""], // [Regex, Regex Flags]
                                            [`^ *?(?:\\?)${COL_BREAK_STRS} *?$`        ,""],
                                            [`^:{3,} *${COL_BREAK_STRS} *(?:(?:$\\n^)?| *):{3,} *$` ,"m"]];
 const COL_REGEX_ARR: RegExp[] = [];
