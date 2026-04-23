@@ -24,9 +24,9 @@ Take your boring markdown document and add some columns to it! With Multi Column
 - [Region Settings](#region-settings)
 - [Multi-Column Reflow](#full-document-multi-column-reflow)
 - [Available Commands](#plugin-commands)
-- [Installation](#installation)
+- [Installation](#installation) 
 - [Known Issues](#known-issues)
-- [Change Log](#change-log)
+- [Changelog](#changelog)
 
 ---
 ---
@@ -549,7 +549,7 @@ This syntax has been entirely deprecated due to many compounding issues caused b
 #### **End Multi-Column Region:**
 --- mcm-end
 
-# Change Log
+# Changelog
 
 ### **0.9.1**
 ##### **Bug Fixes**
@@ -689,9 +689,7 @@ Multi-Column Markdown:
     - Attempted to fix cross compatibility with "Buttons" plugin in Reading mode. #72
     - Added error message when user embeds a file within a live preview region.
 
-## Older Changes:
-
-[Change log](ChangeLog.md)
+Older Changes are in the dedicated [changelog](changelog.md) file
 
 
 # Support Me:
