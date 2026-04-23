@@ -14,7 +14,9 @@ const MCM_START = "(mcm-start)";
 const MCM_END = "(mcm-end)";
 const MCM_SETTINGS = "(mcm-settings)";
 const COL_BREAK = "(col-break|column-break)";
+
 const DELIMITER = "(===|---)";
+const PANDOC_DELIMITER = "(:::+)";
 
 const START_REGEX_STR = `${DELIMITER} *${MCM_START}(:?[a-zA-Z0-9-_\\s]*)?`;
 const START_REGEX = new RegExp(START_REGEX_STR);
@@ -133,7 +135,7 @@ function getEndTagData(text: string) {
 }
 
 const COL_REGEX_STRS: [string,string][] = [[`^${DELIMITER}\\s*?${COL_BREAK}\\s*?$`   ,""], // [Regex, Regex Flags]
-                                           [`^:{3,} *${COL_BREAK} *(?:(?:$\\n^)?| *):{3,} *$` ,"m"]];
+                                           [`^${PANDOC_DELIMITER} *${COL_BREAK} *(?:(?:$\\n^)?| *)${PANDOC_DELIMITER} *$` ,"m"]];
 const COL_REGEX_ARR: RegExp[] = [];
 for(let i = 0; i < COL_REGEX_STRS.length; i++) {
     COL_REGEX_ARR.push(new RegExp(COL_REGEX_STRS[i][0], COL_REGEX_STRS[i][1]));
@@ -154,7 +156,7 @@ export function containsColEndTag(text: string): boolean {
 
 const INNER_COL_END_REGEX_ARR: string[] = [
     `^${DELIMITER}\\s*?${COL_BREAK}\\s*?$\\n?`,
-    `^:{3,} *${COL_BREAK} *(?:(?:$\\n^)?| *):{3,} *$`
+    `^${PANDOC_DELIMITER} *${COL_BREAK} *(?:(?:$\\n^)?| *)${PANDOC_DELIMITER} *$`
 ];
 export function checkForParagraphInnerColEndTag(text: string): RegExpExecArray | null {
 
