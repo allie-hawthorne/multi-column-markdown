@@ -155,7 +155,7 @@ export function containsColEndTag(text: string): boolean {
     return found;
 }
 
-const INNER_COL_END_REGEX_ARR: string[] = [
+const INNER_COL_END_REGEX_ARR = [
     `^${DELIMITER}\\s*?${COL_BREAK}\\s*?$\\n?`,
     `^${PANDOC_DELIMITER} *${COL_BREAK} *(?:(?:$\\n^)?| *)${PANDOC_DELIMITER} *$`
 ];
@@ -390,7 +390,7 @@ export function getStartBlockOrCodeblockAboveLine(linesAboveArray: string[],
 
         let textAbove = originalText;
         let offset = 0;
-        let tagMatchData: StartTagRegexMatch = null;
+        let tagMatchData: StartTagRegexMatch | null = null;
         let lastFoundTag = ""
         for (let i = 0; true; i++) {
             if (i > 100) {
@@ -490,7 +490,7 @@ export function getStartTagKey(startTag: string): string | null {
 
 
 const TAB_HEADER_END_REGEX_STR = `^${CODE_BLOCK_DELIMITER}$`;
-const TAB_HEADER_END_REGEX: RegExp = new RegExp(TAB_HEADER_END_REGEX_STR);
+const TAB_HEADER_END_REGEX = new RegExp(TAB_HEADER_END_REGEX_STR);
 export function parseCodeBlockStart(codeBlockLines: string[]): { id: string, index: number} | null {
 
     let id = null;
@@ -518,7 +518,7 @@ export function parseCodeBlockStart(codeBlockLines: string[]): { id: string, ind
         return { id: id, index: -1 }
     }
 }
-const CODE_BLOCK_END_REGEX: RegExp = new RegExp(CODE_BLOCK_DELIMITER);
+const CODE_BLOCK_END_REGEX = new RegExp(CODE_BLOCK_DELIMITER);
 export function findEndOfCodeBlock(text: string): { found: boolean, startPosition: number, endPosition: number, matchLength: number } {
 
     let found = false;
