@@ -17,6 +17,7 @@ const COL_BREAK = "(col-break|column-break)";
 
 const DELIMITER = "(===|---)";
 const PANDOC_DELIMITER = "(:::+)";
+const CODE_BLOCK_DELIMITER = "```";
 
 const START_REGEX_STR = `${DELIMITER} *${MCM_START}(:?[a-zA-Z0-9-_\\s]*)?`;
 const START_REGEX = new RegExp(START_REGEX_STR);
@@ -181,7 +182,7 @@ export function elInnerTextContainsColEndTag(text: string): boolean {
     return found;
 }
 
-const COL_SETTINGS_REGEX_STRS = `\`\`\`${MCM_SETTINGS}`;
+const COL_SETTINGS_REGEX_STRS = `${CODE_BLOCK_DELIMITER}${MCM_SETTINGS}`;
 const COL_SETTINGS_REGEX_ARR = new RegExp(COL_SETTINGS_REGEX_STRS);
 export function containsColSettingsTag(text: string): boolean {
 
@@ -206,7 +207,7 @@ export function findSettingsCodeblock(text: string): StartTagRegexMatch {
         endPosition = startPosition + matchLength;
 
         let remainingText = text.slice(endPosition)
-        regexData = CODEBLOCK_END_REGEX.exec(remainingText)
+        regexData = CODE_BLOCK_END_REGEX.exec(remainingText)
         if(regexData !== null && regexData.length > 0) {
             found = true;
             endPosition += regexData.index + regexData[0].length 
@@ -222,7 +223,7 @@ export function findSettingsCodeblock(text: string): StartTagRegexMatch {
     };
 }
 
-const START_CODEBLOCK_REGEX = new RegExp(`\`\`\`(:?${MCM_START})(.*?)\`\`\``, "ms");
+const START_CODEBLOCK_REGEX = new RegExp(`${CODE_BLOCK_DELIMITER}(:?${MCM_START})(.*?)${CODE_BLOCK_DELIMITER}`, "ms");
 
 export function findStartCodeblock(text: string): StartTagRegexMatch {
 
@@ -373,7 +374,7 @@ export function getStartBlockOrCodeblockAboveLine(linesAboveArray: string[],
 
         let linesAboveArray = textAbove.split("\n");
 
-        let pandocData = getPandocStartData(`${lastFoundTag}`);
+        let pandocData = getPandocStartData(lastFoundTag);
         let startBlockKey = pandocData.userSettings.columnID;
 
         return {
@@ -488,7 +489,7 @@ export function getStartTagKey(startTag: string): string | null {
 }
 
 
-const TAB_HEADER_END_REGEX_STR = "^```$";
+const TAB_HEADER_END_REGEX_STR = `^${CODE_BLOCK_DELIMITER}$`;
 const TAB_HEADER_END_REGEX: RegExp = new RegExp(TAB_HEADER_END_REGEX_STR);
 export function parseCodeBlockStart(codeBlockLines: string[]): { id: string, index: number} | null {
 
@@ -517,8 +518,7 @@ export function parseCodeBlockStart(codeBlockLines: string[]): { id: string, ind
         return { id: id, index: -1 }
     }
 }
-const CODEBLOCK_END_REGEX_STR = "```";
-const CODEBLOCK_END_REGEX: RegExp = new RegExp(CODEBLOCK_END_REGEX_STR);
+const CODE_BLOCK_END_REGEX: RegExp = new RegExp(CODE_BLOCK_DELIMITER);
 export function findEndOfCodeBlock(text: string): { found: boolean, startPosition: number, endPosition: number, matchLength: number } {
 
     let found = false;
@@ -526,7 +526,7 @@ export function findEndOfCodeBlock(text: string): { found: boolean, startPositio
     let matchLength = 0;
     let endPosition = -1;
 
-    let regexData = CODEBLOCK_END_REGEX.exec(text)
+    let regexData = CODE_BLOCK_END_REGEX.exec(text)
     if(regexData !== null && regexData.length > 0) {
         found = true;
         startPosition = regexData.index
