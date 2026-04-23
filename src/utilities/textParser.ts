@@ -154,7 +154,6 @@ export function containsColEndTag(text: string): boolean {
 
 const INNER_COL_END_REGEX_ARR: string[] = [
     `^${DELIMITER}\\s*?${COL_BREAK}\\s*?$\\n?`,
-    `^ *?(?:\\?)${COL_BREAK} *?$\\n?`,
     `^:{3,} *${COL_BREAK} *(?:(?:$\\n^)?| *):{3,} *$`
 ];
 export function checkForParagraphInnerColEndTag(text: string): RegExpExecArray | null {
