@@ -10,11 +10,10 @@ import { parseStartRegionCodeBlockID } from "./settingsParser";
 import { containsPandoc, findPandocStart, reducePandocRegionToEndDiv, getPandocStartData } from "./pandocParser";
 import { RegionType, StartTagRegexMatch, defaultStartRegionData } from "./interfaces";
 
-// TODO: are these the best names?
-const COL_START_STRS = "(col-start|column-start)";
-const COL_END_STRS = "(col-end|column-end)";
+const COL_START_STRS = "(mcm-start)";
+const COL_END_STRS = "(mcm-end)";
 const COL_BREAK_STRS = "(col-break|column-break)";
-const COL_SETTINGS_STRS = "(col-settings|column-settings)";
+const COL_SETTINGS_STRS = "(mcm-settings)";
 const COL_DELIMITER = "(===|---)";
 
 const START_REGEX_STR = `${COL_DELIMITER} *${COL_START_STRS}(:?[a-zA-Z0-9-_\\s]*)?`;
